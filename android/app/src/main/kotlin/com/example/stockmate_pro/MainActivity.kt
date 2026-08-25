@@ -1,0 +1,5 @@
+package com.example.stockmate_pro
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity : FlutterActivity()
