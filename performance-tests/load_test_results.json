@@ -1,0 +1,493 @@
+{
+  "test_config": {
+    "concurrent_users": 100,
+    "duration_seconds": 60,
+    "target_url": "http://localhost:8000",
+    "timestamp": "2026-08-25T15:07:13.546277"
+  },
+  "overall_metrics": {
+    "total_requests": 1153,
+    "duration_seconds": 94.3,
+    "rps": 12.23,
+    "success_count": 1153,
+    "error_count": 0,
+    "error_rate_pct": 0.0,
+    "latency_ms": {
+      "min": 0.28,
+      "avg": 7574.21,
+      "p50_median": 5581.37,
+      "p90": 16184.22,
+      "p95": 25101.67,
+      "p99": 37466.56,
+      "max": 48199.76
+    }
+  },
+  "status_code_distribution": {
+    "200": 941,
+    "401": 212
+  },
+  "throughput_per_second": [
+    {
+      "second": 0,
+      "requests": 13
+    },
+    {
+      "second": 1,
+      "requests": 0
+    },
+    {
+      "second": 2,
+      "requests": 3
+    },
+    {
+      "second": 3,
+      "requests": 4
+    },
+    {
+      "second": 4,
+      "requests": 12
+    },
+    {
+      "second": 5,
+      "requests": 8
+    },
+    {
+      "second": 6,
+      "requests": 4
+    },
+    {
+      "second": 7,
+      "requests": 8
+    },
+    {
+      "second": 8,
+      "requests": 86
+    },
+    {
+      "second": 9,
+      "requests": 4
+    },
+    {
+      "second": 10,
+      "requests": 4
+    },
+    {
+      "second": 11,
+      "requests": 4
+    },
+    {
+      "second": 12,
+      "requests": 16
+    },
+    {
+      "second": 13,
+      "requests": 35
+    },
+    {
+      "second": 14,
+      "requests": 25
+    },
+    {
+      "second": 15,
+      "requests": 4
+    },
+    {
+      "second": 16,
+      "requests": 4
+    },
+    {
+      "second": 17,
+      "requests": 7
+    },
+    {
+      "second": 18,
+      "requests": 3
+    },
+    {
+      "second": 19,
+      "requests": 8
+    },
+    {
+      "second": 20,
+      "requests": 6
+    },
+    {
+      "second": 21,
+      "requests": 4
+    },
+    {
+      "second": 22,
+      "requests": 9
+    },
+    {
+      "second": 23,
+      "requests": 4
+    },
+    {
+      "second": 24,
+      "requests": 15
+    },
+    {
+      "second": 25,
+      "requests": 99
+    },
+    {
+      "second": 26,
+      "requests": 4
+    },
+    {
+      "second": 27,
+      "requests": 4
+    },
+    {
+      "second": 28,
+      "requests": 4
+    },
+    {
+      "second": 29,
+      "requests": 6
+    },
+    {
+      "second": 30,
+      "requests": 83
+    },
+    {
+      "second": 31,
+      "requests": 0
+    },
+    {
+      "second": 32,
+      "requests": 11
+    },
+    {
+      "second": 33,
+      "requests": 5
+    },
+    {
+      "second": 34,
+      "requests": 13
+    },
+    {
+      "second": 35,
+      "requests": 12
+    },
+    {
+      "second": 36,
+      "requests": 11
+    },
+    {
+      "second": 37,
+      "requests": 22
+    },
+    {
+      "second": 38,
+      "requests": 13
+    },
+    {
+      "second": 39,
+      "requests": 7
+    },
+    {
+      "second": 40,
+      "requests": 0
+    },
+    {
+      "second": 41,
+      "requests": 5
+    },
+    {
+      "second": 42,
+      "requests": 4
+    },
+    {
+      "second": 43,
+      "requests": 5
+    },
+    {
+      "second": 44,
+      "requests": 15
+    },
+    {
+      "second": 45,
+      "requests": 65
+    },
+    {
+      "second": 46,
+      "requests": 21
+    },
+    {
+      "second": 47,
+      "requests": 6
+    },
+    {
+      "second": 48,
+      "requests": 6
+    },
+    {
+      "second": 49,
+      "requests": 0
+    },
+    {
+      "second": 50,
+      "requests": 3
+    },
+    {
+      "second": 51,
+      "requests": 4
+    },
+    {
+      "second": 52,
+      "requests": 13
+    },
+    {
+      "second": 53,
+      "requests": 0
+    },
+    {
+      "second": 54,
+      "requests": 10
+    },
+    {
+      "second": 55,
+      "requests": 6
+    },
+    {
+      "second": 56,
+      "requests": 0
+    },
+    {
+      "second": 57,
+      "requests": 6
+    },
+    {
+      "second": 58,
+      "requests": 3
+    },
+    {
+      "second": 59,
+      "requests": 4
+    },
+    {
+      "second": 60,
+      "requests": 5
+    },
+    {
+      "second": 61,
+      "requests": 9
+    },
+    {
+      "second": 62,
+      "requests": 0
+    },
+    {
+      "second": 63,
+      "requests": 2
+    },
+    {
+      "second": 64,
+      "requests": 7
+    },
+    {
+      "second": 65,
+      "requests": 0
+    },
+    {
+      "second": 66,
+      "requests": 0
+    },
+    {
+      "second": 67,
+      "requests": 0
+    },
+    {
+      "second": 68,
+      "requests": 0
+    },
+    {
+      "second": 69,
+      "requests": 0
+    },
+    {
+      "second": 70,
+      "requests": 0
+    },
+    {
+      "second": 71,
+      "requests": 1
+    },
+    {
+      "second": 72,
+      "requests": 0
+    },
+    {
+      "second": 73,
+      "requests": 12
+    },
+    {
+      "second": 74,
+      "requests": 9
+    },
+    {
+      "second": 75,
+      "requests": 0
+    },
+    {
+      "second": 76,
+      "requests": 1
+    },
+    {
+      "second": 77,
+      "requests": 6
+    },
+    {
+      "second": 78,
+      "requests": 6
+    },
+    {
+      "second": 79,
+      "requests": 3
+    },
+    {
+      "second": 80,
+      "requests": 12
+    },
+    {
+      "second": 81,
+      "requests": 8
+    },
+    {
+      "second": 82,
+      "requests": 14
+    },
+    {
+      "second": 83,
+      "requests": 4
+    },
+    {
+      "second": 84,
+      "requests": 8
+    },
+    {
+      "second": 85,
+      "requests": 83
+    },
+    {
+      "second": 86,
+      "requests": 4
+    },
+    {
+      "second": 87,
+      "requests": 15
+    },
+    {
+      "second": 88,
+      "requests": 7
+    },
+    {
+      "second": 89,
+      "requests": 54
+    },
+    {
+      "second": 90,
+      "requests": 23
+    },
+    {
+      "second": 91,
+      "requests": 4
+    },
+    {
+      "second": 92,
+      "requests": 4
+    },
+    {
+      "second": 93,
+      "requests": 7
+    }
+  ],
+  "endpoints": {
+    "Health Check (GET /)": {
+      "requests": 171,
+      "rps": 1.81,
+      "min_ms": 0.28,
+      "avg_ms": 0.55,
+      "p50_ms": 0.43,
+      "p95_ms": 1.08,
+      "p99_ms": 1.97,
+      "max_ms": 3.13,
+      "errors": 0,
+      "error_rate_pct": 0.0
+    },
+    "User Login (POST /login)": {
+      "requests": 212,
+      "rps": 2.25,
+      "min_ms": 342.03,
+      "avg_ms": 6518.61,
+      "p50_ms": 5183.8,
+      "p95_ms": 20539.15,
+      "p99_ms": 30974.33,
+      "max_ms": 36023.92,
+      "errors": 0,
+      "error_rate_pct": 0.0
+    },
+    "Product List (GET /products/1)": {
+      "requests": 276,
+      "rps": 2.93,
+      "min_ms": 82.25,
+      "avg_ms": 8683.37,
+      "p50_ms": 6358.53,
+      "p95_ms": 25250.48,
+      "p99_ms": 31958.92,
+      "max_ms": 43913.18,
+      "errors": 0,
+      "error_rate_pct": 0.0
+    },
+    "Product Search (GET /products/search/1)": {
+      "requests": 194,
+      "rps": 2.06,
+      "min_ms": 59.8,
+      "avg_ms": 7549.86,
+      "p50_ms": 5752.25,
+      "p95_ms": 22405.02,
+      "p99_ms": 24988.33,
+      "max_ms": 30519.31,
+      "errors": 0,
+      "error_rate_pct": 0.0
+    },
+    "Dashboard KPI (GET /dashboard/1)": {
+      "requests": 171,
+      "rps": 1.81,
+      "min_ms": 1155.38,
+      "avg_ms": 14856.12,
+      "p50_ms": 11110.28,
+      "p95_ms": 36736.27,
+      "p99_ms": 40125.89,
+      "max_ms": 48199.76,
+      "errors": 0,
+      "error_rate_pct": 0.0
+    },
+    "Alerts (GET /products/alerts/1)": {
+      "requests": 64,
+      "rps": 0.68,
+      "min_ms": 85.95,
+      "avg_ms": 6703.29,
+      "p50_ms": 5577.49,
+      "p95_ms": 11306.31,
+      "p99_ms": 29832.21,
+      "max_ms": 38283.53,
+      "errors": 0,
+      "error_rate_pct": 0.0
+    },
+    "Sales Ledger (GET /sales/1)": {
+      "requests": 65,
+      "rps": 0.69,
+      "min_ms": 87.99,
+      "avg_ms": 8005.1,
+      "p50_ms": 6255.35,
+      "p95_ms": 21789.4,
+      "p99_ms": 30343.93,
+      "max_ms": 32552.57,
+      "errors": 0,
+      "error_rate_pct": 0.0
+    }
+  }
+}
