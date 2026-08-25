@@ -1,0 +1,33 @@
+{
+  "name": "stockmate-pro-appium-tests",
+  "version": "1.0.0",
+  "description": "Appium Mobile E2E Automation Testing Suite for StockMate Pro Flutter Application",
+  "main": "tests/mobile-e2e-tests.js",
+  "scripts": {
+    "test": "mocha tests/mobile-e2e-tests.js --timeout 180000 --reporter spec",
+    "test:android": "cross-env PLATFORM=android mocha tests/mobile-e2e-tests.js --timeout 180000",
+    "test:ios": "cross-env PLATFORM=ios mocha tests/mobile-e2e-tests.js --timeout 180000",
+    "generate:report": "python generate_appium_test_cases_excel.py"
+  },
+  "keywords": [
+    "appium",
+    "webdriverio",
+    "flutter",
+    "android",
+    "ios",
+    "e2e-testing",
+    "mobile-automation"
+  ],
+  "author": "StockMate Pro Mobile QA Team",
+  "license": "ISC",
+  "dependencies": {
+    "webdriverio": "^8.27.0"
+  },
+  "devDependencies": {
+    "appium": "^2.4.1",
+    "appium-uiautomator2-driver": "^3.0.4",
+    "appium-xcuitest-driver": "^5.12.2",
+    "cross-env": "^7.0.3",
+    "mocha": "^10.2.0"
+  }
+}
