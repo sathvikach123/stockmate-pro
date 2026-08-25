@@ -1,0 +1,32 @@
+{
+  "name": "stockmate-pro-selenium-tests",
+  "version": "1.0.0",
+  "description": "Selenium WebDriver E2E Automation Testing Suite for StockMate Pro Web Application",
+  "main": "tests/login-tests.js",
+  "scripts": {
+    "test": "mocha tests/login-tests.js --timeout 60000 --reporter spec",
+    "test:headless": "cross-env HEADLESS=true mocha tests/login-tests.js --timeout 60000",
+    "generate:report": "python ../generate_test_report.py"
+  },
+  "keywords": [
+    "selenium",
+    "webdriver",
+    "e2e-testing",
+    "stockmate-pro",
+    "flutter-web",
+    "qa",
+    "automation"
+  ],
+  "author": "StockMate Pro QA Team",
+  "license": "ISC",
+  "dependencies": {
+    "selenium-webdriver": "^4.16.0",
+    "chromedriver": "^120.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "cross-env": "^7.0.3",
+    "mocha": "^10.2.0",
+    "mochawesome": "^7.1.3"
+  }
+}
