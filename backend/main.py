@@ -40,7 +40,7 @@ app.add_middleware(
 )
 
 
-# â”€â”€ Product computed flags & profit margin helper â”€â”€
+# ── Product computed flags & profit margin helper ──
 def enrich_product(p: dict) -> dict:
     today = date.today()
     exp_str = p.get("expiry_date")
@@ -48,7 +48,11 @@ def enrich_product(p: dict) -> dict:
 
     if exp_str:
         try:
-            exp_date = datetime.fromisoformat(str(exp_str).split("T")[0]).date()
+            if isinstance(exp_str, datetime):
+                exp_date = exp_str.date()
+                exp_str = exp_str.strftime("%Y-%m-%d")
+            else:
+                exp_date = datetime.fromisoformat(str(exp_str).split("T")[0]).date()
             days_left = (exp_date - today).days
         except Exception:
             days_left = None
@@ -75,19 +79,33 @@ def enrich_product(p: dict) -> dict:
     if isinstance(updated_at, datetime):
         updated_at = updated_at.isoformat()
 
+    # Safely convert ID
+    raw_id = p.get("id")
+    if raw_id is None:
+        raw_id = 0
+    try:
+        prod_id = int(raw_id)
+    except Exception:
+        prod_id = 0
+
+    try:
+        user_id = int(p.get("user_id", 0))
+    except Exception:
+        user_id = 0
+
     return {
-        "id": int(p.get("id", p.get("_id", 0))),
-        "user_id": int(p.get("user_id", 0)),
-        "name": p.get("name", ""),
-        "sku": p.get("sku", ""),
-        "category": p.get("category", "other"),
+        "id": prod_id,
+        "user_id": user_id,
+        "name": str(p.get("name", "")),
+        "sku": str(p.get("sku", "")),
+        "category": str(p.get("category", "other")),
         "price": price,
         "cost_price": cost_price,
         "quantity": qty,
         "low_stock_threshold": low_thresh,
-        "expiry_date": exp_str,
+        "expiry_date": str(exp_str) if exp_str else None,
         "brand": p.get("brand"),
-        "unit": p.get("unit", "piece"),
+        "unit": str(p.get("unit", "piece")),
         "is_expired": is_expired,
         "is_expiring_soon": is_expiring_soon,
         "is_low_stock": is_low_stock,
@@ -319,17 +337,22 @@ async def record_sale(data: schemas.SaleCreate):
             detail=f"Insufficient stock (Only {prod_exists.get('quantity', 0)} left)"
         )
 
-    # 2. Insert sale record
+    # 2. Derive product_name, sale_price and total_amount if omitted
+    prod_name = data.product_name or product.get("name", "Product")
+    sale_price = float(data.sale_price if data.sale_price is not None and data.sale_price > 0 else product.get("price", 0.0))
+    total_amount = float(data.total_amount if data.total_amount is not None and data.total_amount > 0 else round(data.quantity_sold * sale_price, 2))
+
+    # 3. Insert sale record
     sale_id = await get_next_sequence("sale_id")
     sale_date = datetime.utcnow()
     sale_doc = {
         "id": sale_id,
         "user_id": data.user_id,
         "product_id": data.product_id,
-        "product_name": data.product_name,
+        "product_name": prod_name,
         "quantity_sold": data.quantity_sold,
-        "sale_price": data.sale_price,
-        "total_amount": data.total_amount,
+        "sale_price": sale_price,
+        "total_amount": total_amount,
         "note": data.note,
         "sale_date": sale_date,
     }
@@ -356,7 +379,7 @@ async def delete_sale(sale_id: int):
     return {"message": "Sale deleted successfully"}
 
 
-# â”€â”€â”€ Dashboard & Analytics â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+# ── Dashboard & Analytics ──────────────────────────────────────────────────
 
 @app.get("/dashboard/{user_id}")
 @app.get("/analytics/{user_id}")
@@ -405,9 +428,20 @@ async def get_dashboard(user_id: int):
     today_revenue = 0.0
     week_revenue = 0.0
 
+    def parse_sale_dt(s_val):
+        if isinstance(s_val, datetime):
+            return s_val
+        if isinstance(s_val, str):
+            try:
+                clean_str = s_val.replace("Z", "+00:00").split("+")[0]
+                return datetime.fromisoformat(clean_str)
+            except Exception:
+                return None
+        return None
+
     for s in all_sales:
-        s_date = s.get("sale_date")
-        if isinstance(s_date, datetime):
+        s_date = parse_sale_dt(s.get("sale_date"))
+        if s_date:
             if s_date >= today_start:
                 today_revenue += float(s.get("total_amount", 0.0))
             if s_date >= seven_days_ago:
@@ -417,10 +451,12 @@ async def get_dashboard(user_id: int):
     chart_data = []
     for i in range(7):
         day_date = (seven_days_ago + timedelta(days=i)).date()
-        day_sales = [
-            s for s in all_sales
-            if isinstance(s.get("sale_date"), datetime) and s["sale_date"].date() == day_date
-        ]
+        day_sales = []
+        for s in all_sales:
+            s_date = parse_sale_dt(s.get("sale_date"))
+            if s_date and s_date.date() == day_date:
+                day_sales.append(s)
+
         chart_data.append({
             "day": day_date.strftime("%a"),
             "date": day_date.isoformat(),
@@ -441,7 +477,7 @@ async def get_dashboard(user_id: int):
         product_sales_map.values(), key=lambda x: x["revenue"], reverse=True
     )[:5]
 
-    recent_sales = [
+    all_sales_formatted = [
         {
             "id": int(s["id"]),
             "user_id": int(s["user_id"]),
@@ -453,7 +489,7 @@ async def get_dashboard(user_id: int):
             "sale_date": s["sale_date"].isoformat() if isinstance(s.get("sale_date"), datetime) else str(s.get("sale_date")),
             "note": s.get("note"),
         }
-        for s in all_sales[:10]
+        for s in all_sales
     ]
 
     return {
@@ -464,7 +500,8 @@ async def get_dashboard(user_id: int):
         "total_revenue": round(total_revenue, 2),
         "total_transactions": total_txns,
         "alerts": alerts,
-        "recent_sales": recent_sales,
+        "sales": all_sales_formatted,
+        "recent_sales": all_sales_formatted[:10],
         "chart_data": chart_data,
         "top_products": top_products,
         "category_counts": category_counts,

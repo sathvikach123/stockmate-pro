@@ -49,8 +49,8 @@ class ProductQuantityUpdate(BaseModel):
 class SaleCreate(BaseModel):
     user_id: int
     product_id: int
-    product_name: str
+    product_name: Optional[str] = None
     quantity_sold: int
-    sale_price: float
-    total_amount: float
+    sale_price: Optional[float] = None
+    total_amount: Optional[float] = None
     note: Optional[str] = None

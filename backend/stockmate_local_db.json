@@ -26,13 +26,13 @@
       "category": "grocery",
       "price": 30.0,
       "cost_price": 50.0,
-      "quantity": 20,
+      "quantity": 18,
       "low_stock_threshold": 10,
       "expiry_date": "2026-09-25",
       "brand": "Tata",
       "unit": "kg",
       "created_at": "2026-08-25T05:12:33.847858",
-      "updated_at": "2026-08-25T05:12:33.847858"
+      "updated_at": "2026-08-26T03:49:30.984424"
     },
     {
       "id": 2,
@@ -51,7 +51,19 @@
       "updated_at": "2026-08-25T05:23:39.967406"
     }
   ],
-  "sales": [],
+  "sales": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "product_id": 1,
+      "product_name": "salt",
+      "quantity_sold": 2,
+      "sale_price": 30.0,
+      "total_amount": 60.0,
+      "note": "Store Counter Sale",
+      "sale_date": "2026-08-26T03:49:35.041796"
+    }
+  ],
   "counters": [
     {
       "id": "user_id",
@@ -60,6 +72,10 @@
     {
       "id": "product_id",
       "seq": 2
+    },
+    {
+      "id": "sale_id",
+      "seq": 1
     }
   ]
 }

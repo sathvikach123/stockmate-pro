@@ -189,24 +189,29 @@ class SalesProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final res = await ApiService.getAnalytics(userId);
-      if (res['success']) {
-        final d    = res['data'];
-        _sales       = (d['sales'] as List).map((j) => Sale.fromJson(j)).toList();
+      if (res['success'] && res['data'] != null) {
+        final d = res['data'];
+        final rawSales = d['sales'] ?? d['recent_sales'] ?? [];
+        if (rawSales is List) {
+          _sales = rawSales.map((j) => Sale.fromJson(j)).toList();
+        }
         _chartData   = List<Map<String, dynamic>>.from(d['chart_data'] ?? []);
         _topProducts = List<Map<String, dynamic>>.from(d['top_products'] ?? []);
-        _todayRevenue = (d['today_revenue'] as num?)?.toDouble() ?? 0;
-        _weekRevenue  = (d['week_revenue']  as num?)?.toDouble() ?? 0;
-        _totalRevenue = (d['total_revenue'] as num?)?.toDouble() ?? 0;
-        _totalTxns    = (d['total_transactions'] as num?)?.toInt() ?? 0;
+        _todayRevenue = (d['today_revenue'] as num?)?.toDouble() ?? 0.0;
+        _weekRevenue  = (d['week_revenue']  as num?)?.toDouble() ?? 0.0;
+        _totalRevenue = (d['total_revenue'] as num?)?.toDouble() ?? 0.0;
+        _totalTxns    = (d['total_transactions'] as num?)?.toInt() ?? _sales.length;
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('SalesProvider.load error: $e');
+    }
     _loading = false;
     notifyListeners();
   }
 
   Future<String?> recordSale(int userId, Map<String, dynamic> data) async {
     final res = await ApiService.recordSale({...data, 'user_id': userId});
-    if (!res['success']) return res['error'];
+    if (!res['success']) return res['error'] ?? 'Failed to record sale';
     await load(userId);
     return null;
   }

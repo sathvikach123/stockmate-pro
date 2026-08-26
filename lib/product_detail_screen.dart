@@ -51,23 +51,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
     if (result != null && mounted) {
       final userId = context.read<AuthProvider>().userId;
+      final int qty = result['qty'] as int;
+      final double price = (result['price'] as num).toDouble();
+      final double totalAmount = qty * price;
+
       final error  = await context.read<SalesProvider>().recordSale(userId, {
         'product_id'   : _product.id,
-        'quantity_sold': result['qty'],
-        'sale_price'   : result['price'],
+        'product_name' : _product.name,
+        'quantity_sold': qty,
+        'sale_price'   : price,
+        'total_amount' : totalAmount,
         'note'         : result['note'],
       });
       if (error != null && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(error), backgroundColor: AppColors.danger));
       } else {
-        final newQty = _product.quantity - (result['qty'] as int);
+        final newQty = _product.quantity - qty;
         setState(() => _product = _product.copyWith(quantity: newQty));
-        // Refresh dashboard + products
-        context.read<ProductProvider>().load(userId);
-        context.read<DashboardProvider>().load(userId);
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Sale recorded!'), backgroundColor: AppColors.success));
+        // Refresh all providers (Product, Dashboard, Sales)
+        await Future.wait([
+          context.read<ProductProvider>().load(userId),
+          context.read<DashboardProvider>().load(userId),
+          context.read<SalesProvider>().load(userId),
+        ]);
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Sale recorded! ₹${totalAmount.toStringAsFixed(0)}'), backgroundColor: AppColors.success));
       }
     }
   }
